@@ -667,6 +667,111 @@ body {
   box-shadow: 0 8px 25px rgba(139, 38, 53, 0.25);
 }
 
+/* ============ BOOKING BAR RESULT ============ */
+.booking-bar-result {
+  max-width: 1100px;
+  margin: 0.8rem auto 0;
+  display: none;
+}
+
+.booking-bar-result.show {
+  display: block;
+  animation: slideDown 0.4s var(--ease-out-expo);
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.bar-result-inner {
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 2px;
+}
+
+.bar-result-icon {
+  color: #16A34A;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.bar-result-text {
+  flex: 1;
+  font-size: 0.85rem;
+  color: #15803D;
+  font-weight: 400;
+}
+
+.bar-result-text strong {
+  font-weight: 600;
+}
+
+.bar-result-book {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.7rem 1.8rem;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.bar-result-book:hover,
+.bar-result-book:focus-visible {
+  background: var(--red-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(139, 38, 53, 0.2);
+}
+
+.bar-result-close {
+  background: none;
+  border: none;
+  color: #6B7280;
+  cursor: pointer;
+  padding: 0.3rem;
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.bar-result-close:hover {
+  color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+  .bar-result-inner {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .bar-result-book {
+    width: 100%;
+    text-align: center;
+    order: 3;
+  }
+
+  .bar-result-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .booking-bar-result.show .bar-result-inner {
+    position: relative;
+  }
+}
+
 /* ============ ABOUT ============ */
 .about {
   background: var(--cream);
@@ -2473,7 +2578,17 @@ a:focus-visible {
         <option>Family Room</option>
       </select>
     </div>
-    <button class="booking-bar-btn" data-book-trigger>Check Availability</button>
+    <button class="booking-bar-btn" id="checkAvailBtn">Check Availability</button>
+  </div>
+  <div class="booking-bar-result" id="barResult">
+    <div class="bar-result-inner">
+      <div class="bar-result-icon"><i data-lucide="circle-check" style="width:20px;height:20px"></i></div>
+      <div class="bar-result-text">
+        <strong id="barResultRoom">Standard Room</strong> is available for your selected dates.
+      </div>
+      <button class="bar-result-book" id="barResultBook">Book Now</button>
+      <button class="bar-result-close" id="barResultClose" aria-label="Close"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
   </div>
 </div>
 
@@ -3517,8 +3632,38 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('bar-checkout').setAttribute('min', this.value);
   });
 
-  // ======== BOOKING BAR -> MODAL ========
-  document.querySelector('.booking-bar-btn').addEventListener('click', () => {
+  // ======== BOOKING BAR -> AVAILABILITY CHECK ========
+  const barResult = document.getElementById('barResult');
+  const barResultRoom = document.getElementById('barResultRoom');
+  const checkAvailBtn = document.getElementById('checkAvailBtn');
+
+  checkAvailBtn.addEventListener('click', () => {
+    const room = document.getElementById('bar-room').value;
+    const checkin = document.getElementById('bar-checkin').value;
+    const checkout = document.getElementById('bar-checkout').value;
+
+    if (!checkin || !checkout) {
+      alert('Please select check-in and check-out dates.');
+      return;
+    }
+
+    checkAvailBtn.textContent = 'Checking...';
+    checkAvailBtn.disabled = true;
+
+    setTimeout(() => {
+      barResultRoom.textContent = room;
+      barResult.classList.add('show');
+      checkAvailBtn.textContent = 'Check Availability';
+      checkAvailBtn.disabled = false;
+      lucide.createIcons();
+    }, 1000);
+  });
+
+  document.getElementById('barResultClose').addEventListener('click', () => {
+    barResult.classList.remove('show');
+  });
+
+  document.getElementById('barResultBook').addEventListener('click', () => {
     const room = document.getElementById('bar-room').value;
     const prices = { 'Standard Room': '$45', 'Deluxe Suite': '$75', 'Family Room': '$90' };
     openBookingModal(room, prices[room] || '$45');
@@ -3530,6 +3675,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('bookGuests').value = guestMap[document.getElementById('bar-guests').value] || '';
     document.getElementById('bookRoom').value = room;
 
+    barResult.classList.remove('show');
     checkFormValidity();
   });
 });
