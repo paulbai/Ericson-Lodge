@@ -496,17 +496,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.8rem;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.6rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  font-weight: 500;
 }
 
 .hero-scroll-line {
   width: 1px;
-  height: 50px;
+  height: 60px;
   background: linear-gradient(to bottom, var(--gold-muted), transparent);
   position: relative;
   overflow: hidden;
@@ -523,10 +517,25 @@ body {
   animation: scrollLine 2s ease-in-out infinite;
 }
 
+.hero-scroll-arrow {
+  margin-top: 6px;
+  width: 10px;
+  height: 10px;
+  border-right: 1px solid var(--gold-muted);
+  border-bottom: 1px solid var(--gold-muted);
+  transform: rotate(45deg);
+  animation: arrowPulse 2s ease-in-out infinite;
+}
+
 @keyframes scrollLine {
   0% { top: -100%; }
   50% { top: 100%; }
   100% { top: 100%; }
+}
+
+@keyframes arrowPulse {
+  0%, 100% { opacity: 0.4; transform: rotate(45deg) translateY(0); }
+  50% { opacity: 1; transform: rotate(45deg) translateY(3px); }
 }
 
 /* ============ SECTION COMMON ============ */
@@ -2431,8 +2440,8 @@ a:focus-visible {
     </div>
   </div>
   <div class="hero-scroll">
-    <span>Scroll</span>
     <div class="hero-scroll-line"></div>
+    <div class="hero-scroll-arrow" aria-hidden="true"></div>
   </div>
 </section>
 
