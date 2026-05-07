@@ -33,23 +33,27 @@
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 
 :root {
-  --bg: #0c0a09;
-  --bg-2: #141210;
-  --bg-card: #1c1916;
-  --bg-elevated: #242019;
-  --bg-glass: rgba(20, 18, 16, 0.7);
-  --text: #f5efe6;
-  --text-2: #a09484;
-  --text-dim: #6b6054;
-  --gold: #c9a96e;
-  --gold-bright: #dbb978;
-  --gold-dim: #8a7548;
+  --bg: #FAF6F0;
+  --bg-2: #F0E8DA;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --bg-glass: rgba(250, 246, 240, 0.88);
+  --text: #1A1A1A;
+  --text-2: #555555;
+  --text-dim: #888888;
+  --gold: #B8860B;
+  --gold-bright: #D4A843;
+  --gold-dim: #C9A96E;
   --burgundy: #8B2635;
   --burgundy-light: #a83244;
   --white: #ffffff;
-  --neu: 6px 6px 18px rgba(0,0,0,0.55), -6px -6px 18px rgba(55,46,38,0.07);
-  --neu-hover: 10px 10px 28px rgba(0,0,0,0.65), -10px -10px 28px rgba(55,46,38,0.09);
-  --neu-inset: inset 3px 3px 8px rgba(0,0,0,0.45), inset -3px -3px 8px rgba(55,46,38,0.05);
+  --dark: #0c0a09;
+  --dark-2: #141210;
+  --dark-card: #1c1916;
+  --cream-text: #f5efe6;
+  --neu: 6px 6px 20px rgba(0,0,0,0.06), -6px -6px 20px rgba(255,255,255,0.8);
+  --neu-hover: 8px 8px 28px rgba(0,0,0,0.1), -8px -8px 28px rgba(255,255,255,0.9);
+  --neu-inset: inset 3px 3px 8px rgba(0,0,0,0.06), inset -3px -3px 8px rgba(255,255,255,0.7);
   --font-d: 'Bodoni Moda', serif;
   --font-b: 'Sora', sans-serif;
   --font-a: 'Italiana', serif;
@@ -99,7 +103,7 @@ input, select, textarea { font-family: var(--font-b); }
 
 /* ===== THREE.JS CANVAS ===== */
 #three-canvas {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.06;
 }
 
 /* ===== NAVIGATION ===== */
@@ -108,9 +112,14 @@ input, select, textarea { font-family: var(--font-b); }
   padding: 1.5rem 0; transition: all 0.5s var(--ease);
 }
 .nav.scrolled {
-  padding: 0.8rem 0; background: rgba(12,10,9,0.85); backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(201,169,110,0.08);
+  padding: 0.8rem 0; background: rgba(250,246,240,0.92); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
+.nav:not(.scrolled) .nav-links a { color: rgba(255,255,255,0.7); }
+.nav:not(.scrolled) .nav-links a:hover { color: #fff; }
+.nav:not(.scrolled) .nav-book { border-color: rgba(255,255,255,0.5); color: rgba(255,255,255,0.9); }
+.nav:not(.scrolled) .nav-book:hover { background: #fff; color: var(--dark); }
+.nav:not(.scrolled) .nav-toggle span { background: #fff; }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; }
 .nav-logo {
   font-family: var(--font-d); font-size: 1.4rem; font-weight: 400;
@@ -134,7 +143,7 @@ input, select, textarea { font-family: var(--font-b); }
   padding: 0.7rem 1.8rem; border: 1px solid var(--gold); color: var(--gold);
   transition: all 0.4s var(--ease); font-weight: 500;
 }
-.nav-book:hover { background: var(--gold); color: var(--bg); }
+.nav-book:hover { background: var(--gold); color: #fff; }
 .nav-book:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
 
 .nav-toggle {
@@ -162,7 +171,7 @@ input, select, textarea { font-family: var(--font-b); }
 /* ===== HERO ===== */
 .hero {
   position: relative; min-height: 100vh; display: flex; align-items: center;
-  justify-content: center; overflow: hidden; z-index: 1; background: var(--bg);
+  justify-content: center; overflow: hidden; z-index: 1; background: var(--dark);
 }
 .hero-bg {
   position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&h=1080&fit=crop&q=80') center/cover no-repeat;
@@ -170,7 +179,7 @@ input, select, textarea { font-family: var(--font-b); }
 }
 .hero-bg::after {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(to bottom, rgba(5,4,3,0.4) 0%, rgba(5,4,3,0.2) 40%, rgba(5,4,3,0.6) 70%, rgba(12,10,9,1) 100%);
+  background: linear-gradient(to bottom, rgba(5,4,3,0.4) 0%, rgba(5,4,3,0.2) 40%, rgba(5,4,3,0.55) 70%, rgba(250,246,240,1) 100%);
 }
 .hero-grain {
   position: absolute; inset: 0; opacity: 0.03; pointer-events: none; z-index: 1;
@@ -188,7 +197,7 @@ input, select, textarea { font-family: var(--font-b); }
 .hero-title {
   font-family: var(--font-d); font-weight: 900;
   font-size: clamp(3.5rem, 12vw, 10rem); line-height: 0.9;
-  letter-spacing: -0.02em; text-transform: uppercase; color: var(--text);
+  letter-spacing: -0.02em; text-transform: uppercase; color: var(--cream-text);
   overflow: hidden;
 }
 .hero-title .line { display: block; overflow: hidden; }
@@ -199,7 +208,7 @@ input, select, textarea { font-family: var(--font-b); }
 }
 .hero-tagline {
   font-family: var(--font-a); font-size: clamp(1rem, 2vw, 1.4rem);
-  color: var(--text-2); letter-spacing: 0.08em; margin-bottom: 2.5rem; opacity: 0;
+  color: rgba(255,255,255,0.7); letter-spacing: 0.08em; margin-bottom: 2.5rem; opacity: 0;
 }
 .hero-cta {
   display: inline-flex; align-items: center; gap: 0.8rem;
@@ -214,7 +223,7 @@ input, select, textarea { font-family: var(--font-b); }
 }
 .hero-cta span { position: relative; z-index: 1; }
 .hero-cta:hover::before { transform: translateY(0); }
-.hero-cta:hover { color: var(--bg); }
+.hero-cta:hover { color: #fff; }
 .hero-cta:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 4px; }
 
 .hero-scroll {
@@ -240,11 +249,11 @@ input, select, textarea { font-family: var(--font-b); }
   padding: 0 5% 2rem; background: var(--bg);
 }
 .booking-bar-inner {
-  background: var(--bg-glass); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(201,169,110,0.12); border-radius: 16px;
+  background: var(--white); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0,0,0,0.06); border-radius: 16px;
   padding: 1.5rem 2rem; display: flex; align-items: flex-end; gap: 1rem;
   max-width: 1200px; margin: 0 auto;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.08);
 }
 .bar-field { flex: 1; min-width: 0; }
 .bar-field label {
@@ -252,17 +261,17 @@ input, select, textarea { font-family: var(--font-b); }
   text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; font-weight: 500;
 }
 .bar-field input, .bar-field select {
-  width: 100%; padding: 0.7rem 0.8rem; background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(201,169,110,0.15); border-radius: 8px;
+  width: 100%; padding: 0.7rem 0.8rem; background: var(--bg);
+  border: 1px solid rgba(0,0,0,0.1); border-radius: 8px;
   color: var(--text); font-size: 0.85rem; outline: none;
   transition: border-color 0.3s ease;
 }
 .bar-field input:focus, .bar-field select:focus { border-color: var(--gold); }
 .bar-field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c9a96e' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; padding-right: 2rem; }
-.bar-field select option { background: var(--bg-card); color: var(--text); }
-.bar-field input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7) sepia(1) hue-rotate(0deg); }
+.bar-field select option { background: var(--white); color: var(--text); }
+.bar-field input[type="date"]::-webkit-calendar-picker-indicator { filter: none; }
 .bar-btn {
-  padding: 0.7rem 2rem; background: var(--gold); color: var(--bg);
+  padding: 0.7rem 2rem; background: var(--gold); color: #fff;
   font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
   font-weight: 600; border-radius: 8px; white-space: nowrap;
   transition: all 0.3s var(--ease); flex-shrink: 0;
@@ -341,11 +350,6 @@ input, select, textarea { font-family: var(--font-b); }
 }
 .about-stat-label { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.1em; margin-top: 0.4rem; }
 
-/* ===== SPACE REVEAL GAPS ===== */
-.space-reveal {
-  position: relative; z-index: 1; height: clamp(80px, 12vw, 160px);
-  background: transparent;
-}
 
 /* ===== ROOMS BENTO ===== */
 .rooms { background: var(--bg-2); }
@@ -361,7 +365,7 @@ input, select, textarea { font-family: var(--font-b); }
 .room-card {
   position: relative; border-radius: 24px; overflow: hidden;
   background: var(--bg-card); box-shadow: var(--neu);
-  border: 1px solid rgba(201,169,110,0.06);
+  border: 1px solid rgba(0,0,0,0.04);
   transition: transform 0.5s var(--ease2), box-shadow 0.5s var(--ease2);
   transform-style: preserve-3d; perspective: 800px;
 }
@@ -386,7 +390,7 @@ input, select, textarea { font-family: var(--font-b); }
 }
 .room-card-name {
   font-family: var(--font-d); font-size: 1.6rem; font-weight: 500;
-  color: var(--text); margin-bottom: 0.5rem;
+  color: #fff; margin-bottom: 0.5rem;
 }
 .featured .room-card-name { font-size: 2rem; }
 .room-card-features {
@@ -410,12 +414,12 @@ input, select, textarea { font-family: var(--font-b); }
   text-transform: uppercase; border-radius: 6px; transition: all 0.3s var(--ease);
   font-weight: 500;
 }
-.room-card-book:hover { background: var(--gold); color: var(--bg); }
+.room-card-book:hover { background: var(--gold); color: #fff; }
 .room-card-book:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
 
 .feature-card {
   border-radius: 24px; background: var(--bg-card); box-shadow: var(--neu);
-  border: 1px solid rgba(201,169,110,0.06);
+  border: 1px solid rgba(0,0,0,0.04);
   display: flex; align-items: center; justify-content: center;
   flex-direction: column; gap: 0.8rem; padding: 2rem;
   transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
@@ -435,7 +439,7 @@ input, select, textarea { font-family: var(--font-b); }
 }
 .amenity-card {
   border-radius: 20px; background: var(--bg-card);
-  box-shadow: var(--neu); border: 1px solid rgba(201,169,110,0.06);
+  box-shadow: var(--neu); border: 1px solid rgba(0,0,0,0.04);
   padding: 1.8rem; display: flex; flex-direction: column; justify-content: center;
   transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
@@ -457,10 +461,10 @@ input, select, textarea { font-family: var(--font-b); }
 .dining-img img { width: 100%; height: 100%; object-fit: cover; }
 .dining-img::after {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(to right, transparent 60%, var(--bg-card) 100%);
+  background: linear-gradient(to right, transparent 60%, var(--white) 100%);
 }
 .dining-content {
-  background: var(--bg-card); padding: clamp(2.5rem, 5vw, 5rem);
+  background: var(--white); padding: clamp(2.5rem, 5vw, 5rem);
   display: flex; flex-direction: column; justify-content: center;
 }
 .dining-content p { color: var(--text-2); font-size: 0.95rem; line-height: 1.8; margin-bottom: 1.2rem; }
@@ -495,11 +499,11 @@ input, select, textarea { font-family: var(--font-b); }
 }
 .swiper-nav button {
   width: 48px; height: 48px; border-radius: 50%;
-  border: 1px solid rgba(201,169,110,0.2); display: flex;
+  border: 1px solid rgba(0,0,0,0.12); display: flex;
   align-items: center; justify-content: center; color: var(--gold);
   transition: all 0.3s var(--ease);
 }
-.swiper-nav button:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+.swiper-nav button:hover { background: var(--gold); color: #fff; border-color: var(--gold); }
 .swiper-nav button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 2px; }
 
 /* ===== EXPLORE KENEMA ===== */
@@ -510,7 +514,7 @@ input, select, textarea { font-family: var(--font-b); }
 .explore-card {
   position: relative; border-radius: 20px; overflow: hidden;
   aspect-ratio: 3/4; background: var(--bg-card);
-  box-shadow: var(--neu); border: 1px solid rgba(201,169,110,0.06);
+  box-shadow: var(--neu); border: 1px solid rgba(0,0,0,0.04);
   transition: transform 0.5s var(--ease2), box-shadow 0.5s var(--ease2);
 }
 .explore-card:hover { transform: translateY(-6px); box-shadow: var(--neu-hover); }
@@ -526,9 +530,9 @@ input, select, textarea { font-family: var(--font-b); }
   display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem;
 }
 .explore-card-name {
-  font-family: var(--font-d); font-size: 1.4rem; color: var(--text); margin-bottom: 0.4rem;
+  font-family: var(--font-d); font-size: 1.4rem; color: #fff; margin-bottom: 0.4rem;
 }
-.explore-card-desc { font-size: 0.8rem; color: var(--text-2); line-height: 1.5; }
+.explore-card-desc { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.5; }
 
 /* ===== GALLERY ===== */
 .gallery { background: var(--bg); }
@@ -585,7 +589,7 @@ input, select, textarea { font-family: var(--font-b); }
 .contact-cta-btn {
   display: inline-flex; align-items: center; gap: 0.8rem;
   font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
-  padding: 1.1rem 3rem; background: var(--gold); color: var(--bg);
+  padding: 1.1rem 3rem; background: var(--gold); color: #fff;
   transition: all 0.4s var(--ease); font-weight: 600; border-radius: 4px;
   margin-top: 0.5rem;
 }
@@ -594,52 +598,54 @@ input, select, textarea { font-family: var(--font-b); }
 
 /* ===== FOOTER ===== */
 .footer {
-  position: relative; z-index: 2; background: #050403;
-  padding: 4rem 0 2rem; border-top: 1px solid rgba(201,169,110,0.06);
+  position: relative; z-index: 2; background: #0c0a09;
+  padding: 4rem 0 2rem; color: #f5efe6;
 }
 .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
 .footer-brand-name {
   font-family: var(--font-d); font-size: 1.5rem; color: var(--gold);
   letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem;
 }
-.footer-brand-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.7; max-width: 300px; }
+.footer-brand-desc { font-size: 0.82rem; color: #8a8078; line-height: 1.7; max-width: 300px; }
 .footer-col h4 {
   font-family: var(--font-a); font-size: 0.72rem; letter-spacing: 0.2em;
   text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
 }
 .footer-col a {
-  display: block; font-size: 0.82rem; color: var(--text-dim);
+  display: block; font-size: 0.82rem; color: #8a8078;
   padding: 0.3rem 0; transition: color 0.3s ease;
 }
 .footer-col a:hover { color: var(--gold); }
 .footer-bottom {
   display: flex; justify-content: space-between; align-items: center;
-  padding-top: 2rem; border-top: 1px solid rgba(201,169,110,0.06);
-  font-size: 0.72rem; color: var(--text-dim);
+  padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.72rem; color: #6b6054;
 }
 .footer-social { display: flex; gap: 1rem; }
 .footer-social a {
   width: 36px; height: 36px; border-radius: 50%;
-  border: 1px solid rgba(201,169,110,0.15); display: flex;
-  align-items: center; justify-content: center; color: var(--text-dim);
+  border: 1px solid rgba(255,255,255,0.12); display: flex;
+  align-items: center; justify-content: center; color: #8a8078;
   transition: all 0.3s ease;
 }
 .footer-social a:hover { color: var(--gold); border-color: var(--gold); }
+.footer-credit a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
+.footer-credit a:hover { color: var(--gold-bright); }
 
 /* ===== BOOKING MODAL ===== */
 .booking-modal {
   position: fixed; inset: 0; z-index: 8000;
-  background: rgba(5,4,3,0.92); backdrop-filter: blur(12px);
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(12px);
   display: flex; align-items: center; justify-content: center;
   opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease);
   padding: 1rem;
 }
 .booking-modal.open { opacity: 1; pointer-events: all; }
 .booking-modal-card {
-  background: var(--bg-card); border: 1px solid rgba(201,169,110,0.1);
+  background: var(--white); border: 1px solid rgba(0,0,0,0.06);
   border-radius: 24px; padding: clamp(2rem, 4vw, 3rem);
   max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.2);
   transform: translateY(20px) scale(0.98);
   transition: transform 0.5s var(--ease);
 }
@@ -649,7 +655,7 @@ input, select, textarea { font-family: var(--font-b); }
 .modal-subtitle { font-size: 0.85rem; color: var(--gold); margin-top: 0.3rem; }
 .modal-close {
   width: 40px; height: 40px; border-radius: 50%;
-  border: 1px solid rgba(201,169,110,0.15); display: flex;
+  border: 1px solid rgba(0,0,0,0.1); display: flex;
   align-items: center; justify-content: center; color: var(--text-dim);
   transition: all 0.3s ease; flex-shrink: 0;
 }
@@ -664,8 +670,8 @@ input, select, textarea { font-family: var(--font-b); }
 }
 .form-group label .req { color: var(--burgundy-light); }
 .form-group input, .form-group select, .form-group textarea {
-  width: 100%; padding: 0.75rem 1rem; background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(201,169,110,0.12); border-radius: 10px;
+  width: 100%; padding: 0.75rem 1rem; background: var(--bg);
+  border: 1px solid rgba(0,0,0,0.1); border-radius: 10px;
   color: var(--text); font-size: 0.88rem; outline: none;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -673,23 +679,23 @@ input, select, textarea { font-family: var(--font-b); }
   border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,169,110,0.1);
 }
 .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23c9a96e' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
-.form-group select option { background: var(--bg-card); color: var(--text); }
+.form-group select option { background: var(--white); color: var(--text); }
 .form-group textarea { resize: vertical; min-height: 80px; }
 
 .payment-options { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
 .payment-option {
-  padding: 1.2rem; border-radius: 14px; border: 1px solid rgba(201,169,110,0.12);
-  background: rgba(255,255,255,0.02); cursor: pointer;
+  padding: 1.2rem; border-radius: 14px; border: 1px solid rgba(0,0,0,0.08);
+  background: var(--bg); cursor: pointer;
   transition: all 0.3s var(--ease); text-align: center;
 }
 .payment-option:hover { border-color: var(--gold); }
-.payment-option.selected { border-color: var(--gold); background: rgba(201,169,110,0.08); }
+.payment-option.selected { border-color: var(--gold); background: rgba(184,134,11,0.08); }
 .payment-option input { display: none; }
 .payment-option-title { font-family: var(--font-d); font-size: 1.1rem; color: var(--text); margin-bottom: 0.3rem; }
 .payment-option-desc { font-size: 0.72rem; color: var(--text-dim); line-height: 1.4; }
 
 .book-submit {
-  width: 100%; padding: 1rem; background: var(--gold); color: var(--bg);
+  width: 100%; padding: 1rem; background: var(--gold); color: #fff;
   font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
   font-weight: 600; border-radius: 10px; transition: all 0.3s var(--ease);
   margin-top: 0.5rem;
@@ -776,9 +782,11 @@ input, select, textarea { font-family: var(--font-b); }
 
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-track { background: #f0ebe4; }
 ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+.cursor-dot { background: var(--gold); mix-blend-mode: normal; }
 </style>
 </head>
 <body>
@@ -918,8 +926,6 @@ input, select, textarea { font-family: var(--font-b); }
   </div>
 </section>
 
-<!-- ===== SPACE REVEAL GAP ===== -->
-<div class="space-reveal" aria-hidden="true"></div>
 
 <!-- ===== ROOMS ===== -->
 <section class="section rooms" id="rooms">
@@ -1063,8 +1069,6 @@ input, select, textarea { font-family: var(--font-b); }
   </div>
 </section>
 
-<!-- ===== SPACE REVEAL GAP 2 ===== -->
-<div class="space-reveal" aria-hidden="true"></div>
 
 <!-- ===== TESTIMONIALS ===== -->
 <section class="section testimonials" id="testimonials">
@@ -1197,9 +1201,6 @@ input, select, textarea { font-family: var(--font-b); }
   <button class="lightbox-close" id="lightboxClose" aria-label="Close"><i data-lucide="x" style="width:20px;height:20px"></i></button>
 </div>
 
-<!-- ===== SPACE REVEAL GAP 3 ===== -->
-<div class="space-reveal" aria-hidden="true"></div>
-
 <!-- ===== CONTACT CTA ===== -->
 <section class="contact-cta" id="contact">
   <div class="container">
@@ -1247,7 +1248,7 @@ input, select, textarea { font-family: var(--font-b); }
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; 2025 Ericson Lodge Hotel. All rights reserved.</span>
+      <span>&copy; 2026 Ericson Lodge Hotel. All rights reserved.</span>
       <div class="footer-social">
         <a href="https://www.instagram.com/ericsonlodge" target="_blank" rel="noopener" aria-label="Instagram">
           <i data-lucide="instagram" style="width:16px;height:16px"></i>
@@ -1259,6 +1260,7 @@ input, select, textarea { font-family: var(--font-b); }
           <i data-lucide="phone" style="width:16px;height:16px"></i>
         </a>
       </div>
+      <span class="footer-credit">Built and powered by <a href="https://www.flotme.ai/" target="_blank" rel="noopener">Flot</a></span>
     </div>
   </div>
 </footer>
@@ -1437,10 +1439,9 @@ input, select, textarea { font-family: var(--font-b); }
   const canvas = document.getElementById('three-canvas');
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 2000);
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x020108, 1);
 
   camera.position.z = 4;
 
