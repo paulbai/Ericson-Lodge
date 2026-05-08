@@ -459,7 +459,7 @@ input, select, textarea { font-family: var(--font-b); }
   justify-content: center; font-size: 0.7rem; color: var(--dark);
 }
 
-/* ===== GALLERY ===== */
+/* ===== GALLERY (BENTO GRID) ===== */
 .gallery {
   padding: clamp(40px, 5vw, 80px) 0;
   background: var(--sage-dark);
@@ -477,11 +477,14 @@ input, select, textarea { font-family: var(--font-b); }
   text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.6;
 }
 .gallery-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 220px 220px 220px;
+  gap: 0.75rem;
 }
 .gallery-item {
   border-radius: 16px; overflow: hidden; position: relative;
-  aspect-ratio: 1/1; cursor: pointer;
+  cursor: pointer;
 }
 .gallery-item img {
   width: 100%; height: 100%; object-fit: cover;
@@ -490,11 +493,23 @@ input, select, textarea { font-family: var(--font-b); }
 .gallery-item:hover img { transform: scale(1.08); }
 .gallery-item::after {
   content: ''; position: absolute; inset: 0;
-  background: rgba(26,26,26,0.15); opacity: 0;
-  transition: opacity 0.3s ease;
+  background: linear-gradient(to top, rgba(26,26,26,0.5) 0%, transparent 50%);
+  opacity: 0; transition: opacity 0.3s ease;
 }
 .gallery-item:hover::after { opacity: 1; }
-.gallery-item:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+.gallery-item-label {
+  position: absolute; bottom: 1rem; left: 1rem; z-index: 2;
+  font-family: var(--font-b); font-weight: 700; font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--white);
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.gallery-item:hover .gallery-item-label { opacity: 1; transform: translateY(0); }
+
+/* Bento layout spans */
+.gallery-item--large { grid-column: span 2; grid-row: span 2; }
+.gallery-item--wide { grid-column: span 2; }
+.gallery-item--tall { grid-row: span 2; }
 
 /* ===== CONTACT CTA ===== */
 .contact-cta {
@@ -731,7 +746,10 @@ input, select, textarea { font-family: var(--font-b); }
   .stats-card { right: 1rem; }
   .rooms-grid { grid-template-columns: repeat(2, 1fr); }
   .testimonials-grid { grid-template-columns: 1fr 1fr; }
-  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); grid-template-rows: 180px 180px 180px 180px; }
+  .gallery-item--large { grid-column: span 2; grid-row: span 2; }
+  .gallery-item--wide { grid-column: span 2; }
+  .gallery-item--tall { grid-row: span 2; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
   .badge-1, .badge-2, .badge-3 { left: -3%; }
   .badge-4, .badge-5, .badge-6 { right: -3%; }
@@ -808,8 +826,11 @@ input, select, textarea { font-family: var(--font-b); }
   .testimonials-grid { grid-template-columns: 1fr; gap: 1.2rem; }
 
   /* Gallery */
-  .gallery-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-  .gallery-item:first-child { grid-column: span 2; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; grid-template-rows: auto; }
+  .gallery-item--large { grid-column: span 2; grid-row: span 1; }
+  .gallery-item--wide { grid-column: span 2; }
+  .gallery-item--tall { grid-row: span 1; }
+  .gallery-item { aspect-ratio: 4/3; }
 
   /* CTA */
   .cta-heading { font-size: clamp(2rem, 7vw, 3.5rem); }
@@ -881,8 +902,11 @@ input, select, textarea { font-family: var(--font-b); }
   .testimonials-title { font-size: clamp(1.8rem, 6vw, 2.5rem); }
 
   /* Gallery - single column on very small */
-  .gallery-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-  .gallery-item:first-child { grid-column: span 2; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; grid-template-rows: auto; }
+  .gallery-item { aspect-ratio: 4/3; }
+  .gallery-item--large { grid-column: span 2; grid-row: span 1; aspect-ratio: 16/9; }
+  .gallery-item--wide { grid-column: span 2; aspect-ratio: 16/9; }
+  .gallery-item--tall { grid-row: span 1; }
   .gallery-title { font-size: clamp(1.8rem, 6vw, 2.5rem); }
 
   /* CTA */
@@ -915,8 +939,11 @@ input, select, textarea { font-family: var(--font-b); }
   .feature-pill { font-size: 0.7rem; padding: 0.4rem 0.9rem; }
   .cta-btn { padding: 0.7rem 1.5rem; font-size: 0.8rem; }
   .rooms-sort { font-size: 0.65rem; padding: 0.4rem 0.8rem; }
-  .gallery-grid { grid-template-columns: 1fr; }
-  .gallery-item:first-child { grid-column: span 1; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; gap: 0.5rem; }
+  .gallery-item--large { grid-column: span 2; aspect-ratio: 16/9; }
+  .gallery-item--wide { grid-column: span 2; aspect-ratio: 16/9; }
+  .gallery-item--tall { grid-row: span 1; }
+  .gallery-item { aspect-ratio: 1/1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1198,20 +1225,40 @@ input, select, textarea { font-family: var(--font-b); }
       <span class="gallery-subtitle">Explore our spaces</span>
     </div>
     <div class="gallery-grid">
-      <div class="gallery-item reveal" onclick="openLightbox(this)">
-        <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=800&fit=crop&q=80" alt="Hotel pool area">
+      <!-- Large hero image (2x2) -->
+      <div class="gallery-item gallery-item--large reveal" onclick="openLightbox(this)">
+        <img src="https://placehold.co/800x800/A5A98C/1A1A1A?text=Hotel+Exterior" alt="Hotel exterior">
+        <span class="gallery-item-label">Hotel Exterior</span>
       </div>
+      <!-- Standard -->
       <div class="gallery-item reveal" onclick="openLightbox(this)">
-        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&h=400&fit=crop&q=80" alt="Hotel room">
+        <img src="https://placehold.co/400x400/C8CBB1/1A1A1A?text=Lobby" alt="Hotel lobby">
+        <span class="gallery-item-label">Lobby</span>
       </div>
-      <div class="gallery-item reveal" onclick="openLightbox(this)">
-        <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400&h=400&fit=crop&q=80" alt="Hotel exterior">
+      <!-- Tall (2 rows) -->
+      <div class="gallery-item gallery-item--tall reveal" onclick="openLightbox(this)">
+        <img src="https://placehold.co/400x800/B8BC9F/1A1A1A?text=Pool+Area" alt="Pool area">
+        <span class="gallery-item-label">Pool Area</span>
       </div>
+      <!-- Standard -->
       <div class="gallery-item reveal" onclick="openLightbox(this)">
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=400&fit=crop&q=80" alt="Restaurant">
+        <img src="https://placehold.co/400x400/D5D9C2/1A1A1A?text=Room+Interior" alt="Room interior">
+        <span class="gallery-item-label">Room Interior</span>
       </div>
+      <!-- Standard -->
       <div class="gallery-item reveal" onclick="openLightbox(this)">
-        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400&h=400&fit=crop&q=80" alt="Suite interior">
+        <img src="https://placehold.co/400x400/A5A98C/1A1A1A?text=Restaurant" alt="Restaurant and bar">
+        <span class="gallery-item-label">Restaurant & Bar</span>
+      </div>
+      <!-- Wide (2 cols) -->
+      <div class="gallery-item gallery-item--wide reveal" onclick="openLightbox(this)">
+        <img src="https://placehold.co/800x400/C8CBB1/1A1A1A?text=Dining+Experience" alt="Dining experience">
+        <span class="gallery-item-label">Dining Experience</span>
+      </div>
+      <!-- Standard -->
+      <div class="gallery-item reveal" onclick="openLightbox(this)">
+        <img src="https://placehold.co/400x400/B8BC9F/1A1A1A?text=Suite" alt="Deluxe suite">
+        <span class="gallery-item-label">Deluxe Suite</span>
       </div>
     </div>
   </div>
